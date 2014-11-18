@@ -1,5 +1,6 @@
 from lib.google_places import *
 
+import json
 from lxml import etree
 from time import sleep
 
@@ -50,6 +51,19 @@ class GoogleRadarSearch():
       # Get the markers from the response
       markers=[]
       for result in googleResponse.results:
+         details = G_details(result['reference'], False, self.key)
+
+         self.root = etree.fromstring(details)
+         self.status = self.root[0].text
+         self.results = []
+
+         for result1 in self.root.findall('result'):
+
+            det = {}
+            det['name']  = result1.findall('name')[0].text
+            print(det['name'])
+
+
          self.resultsN+=1
          markers.append(result['location'])
          logger.log_result(str(self.resultsN) + " : " + str(result['location']))
