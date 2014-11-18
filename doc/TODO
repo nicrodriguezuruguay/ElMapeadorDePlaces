@@ -1,0 +1,36 @@
+================================== To-do List ==================================
+
+Important:
+
+* Threading. At current state, the Messenger does not exit when parent
+  is exiting.
+* Use an actual timer between requests so that sleeping between them is
+  accurate. Now the sleep is just added to the overall time it takes for
+  the scan+processing.
+* Fix the Max problem bug. More documentation about it can be found inside
+  the FoursquareExplore service file.
+
+
+Main program:
+
+* Change the design of the services a bit so development is easier:
+  - logger.log_scan could be automated so user doesn't need to handle it
+  - use a set of properties for a service. These "rules" are essentially
+    the constrains of the service.
+* Add filters. These can be services themselves or something else that filters
+  away some of the markers by providing a criteria.
+* Make it easy to link a populator service with a filter.
+* Let the user merge services.
+
+
+GUI:
+
+* Make markers clickable. Once the marker is clicked, it should either show some
+  info passed by the service or use Google Places to show info.
+* Make it possible to change the marker icon. Use some default ones.
+* Controls like PAUSE and STOP.
+
+
+Logging:
+
+* Save file downloaded from the service. At least on error for easy debugging.

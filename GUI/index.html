@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+   
+<head>
+   <meta charset="utf-8"/>
+   <title>Google Places Plus</title>
+   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&amp;sensor=false&amp;language=se&amp;region=se">return;</script>
+   <script src="js/maptoolbox.js"></script>
+   <script src="js/websock.js"></script>
+   <script src="js/messenger.js"></script>
+   <script src="js/init.js"></script>
+   <link rel="stylesheet" href="style/default.css" />
+</head>
+
+<body>
+   <input id='sendText'>
+   <input id='sendButton' type='button' value='Send' disabled onclick="send();">
+   <br>
+  
+   <!-- Map -->
+   <div id="map"></div>
+   
+   <!-- Log -->
+   <br>Log: <br><textarea id="messages" cols=80 rows=10></textarea>
+</body>
+
+<!-- Websock -->
+<script>
+var $D = function(id) { return document.getElementById(id); },
+   ws = null, msgs = $D('messages');
+</script>
+
+</html>

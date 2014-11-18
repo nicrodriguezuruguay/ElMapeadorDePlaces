@@ -1,0 +1,111 @@
+=============================== GEOEXPLORER API ================================
+
+Author: Johan Hanssen Seferidis
+Created: 2013-12-01
+
+Description: This document contains the API used for adding services to Geoexplorer
+
+
+
+==================================== Intro  ====================================
+
+All services can be found at directory /classes/services
+
+Each service should have a descriptive name, and if possible be the name of the
+actual service. For example GoogleRadarSearch is the name used for the 
+Radar Search service provided by Google.
+
+
+
+============================== Service Blueprint  ==============================
+
+Each service should follow the following blueprint:
+
+
+class MyService:
+
+   service={
+   }
+   
+   def search(self, box, logger):
+      markers=[]
+      # Populate the markers here
+      return markers
+      
+      
+The service dictionary is used by the scanner so it knows the limitations
+of the service. For the full options of the service, check the config.py.
+If the dictionary is empty as above, the template in config.py will be fully
+used.
+
+The method search() is called for each box on the map. To this method,
+two objects are provided: box and logger. These objects can be used to
+populate the markers and to log interesting information. More info on
+these objects is provided bellow.
+
+The list markers is just a list of tupples in the form (latitute, longitude)
+Every search() function should return this.
+
+
+
+================================= Service rules ================================
+
+Every service needs to have a service dictionary in order to function correctly.
+The service dictionary is a way so that the scanner knows the service's limits
+and thus it acts accordingly when these are met.
+
+All the possible options for a service can be found in config.py in the 'service'
+entry. 
+
+
+
+============================== Objects' Interface  =============================
+
+---- Box object----
+
+Properties:
+        N                 →  Coordinates of north of the box
+        E                 →  Coordinates of east of the box
+        S                 →  Coordinates of south of the box
+        W                 →  Coordinates of west of the box
+        center            →  Coordinates of center of the box
+        WN                →  Coordinates of west-north of the box
+        NE                →  Coordinates of north-east of the box
+        WS                →  Coordinates of west-south of the box
+        SE                →  Coordinates of south-east of the box
+        xMeters           →  Length of the horizontal side of the box in meters
+        yMeters           →  Length of the vertical side of the box in meters
+   
+Methods:
+        bounds()          →  Gives the bounds of the box
+        length_lat        →  Latitude length of the box
+        length_lng        →  Longitude length of the box
+
+
+---- Logger object----
+
+Methods:
+        log_result(line)  →  Appends a line to the result log file. This should
+                             be used to log information about the scanning of 
+                             a box.
+        log_scan(line)    →  Appends a line to the scan log file. This should
+                             be used for each marker to save the marker's position
+                             and/or other interesting information that you want
+                             to save.
+
+
+
+=============================== Gettools Library ===============================
+
+In /lib/geotools.py some tools can be found that can be used to assist in the
+development for a new service. This module is included in Service.py so you can
+use the following functions directly inside your new service.
+
+   dist(lat1, lon1, lat2, lon2) → Gives the distance between two geographical
+                                  points in meters
+   middleLat(lat1, lat2)	     → Gives the middle latitude between two latitudes
+   middleLng(lng1, lng2)	     → Gives the middle longitude between two longitudes
+   getCountryCode(lat, lng):    → Gives the country code at specific coordinates.
+                                  Return can be: 'UNKNOWN'', <country_code> or None
+
+

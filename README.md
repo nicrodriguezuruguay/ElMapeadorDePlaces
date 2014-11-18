@@ -1,0 +1,97 @@
+Geoexplorer
+========================================================================
+
+Geoexplorer is a framework meant to be used for black-box-testing
+and/or scraping data from geographic services like Google Places
+and Foursquare.
+
+Full documentation both for developers and users can be
+found in the *doc* folder of the project. The full API is there as well.
+
+
+
+Install dependencies
+========================================================================
+
+**Ubuntu 13.10**
+
+Works out of the box.
+
+**Ubuntu 12.04**
+
+    sudo apt-get install python3 python3-lxml
+
+**Windows 7**
+
+1. Download and install *python3.2* from http://www.python.org/download/releases/3.2.5
+2. Edit windows path
+    * Go to *Control Panel* > *System* > *Advanced system settings*
+    * Click the *Environment variables..* button
+    * Edit *PATH* and append `;C:\python32\`
+3. Install the *lxml3.2* from http://pypi.python.org/pypi/lxml/3.2.4
+
+
+Usage
+========================================================================
+
+  1. Run `python3 examples/<example>.py` substituting *\<example\>* with one
+     of the example files
+  2. Open `GUI/index.html` with a webbrowser to see live what is going on
+
+Some services like *Google Radar* require an **API** key. You can edit that by
+adding it in the source (ie. examples/google_radar_search.py).
+
+Once running, a folder called *log* will be created at the current directory.
+This folder with be populated with log files on-the-fly. These can be used to
+debug the search and see the results.
+
+
+Configuration
+========================================================================
+
+The config.py keeps all the applicable options for Geoexplorer in a single file.
+Each option is described bellow:
+ 
+      GUI_PORT                -> Port being used for the communication with the
+                                 GUI
+      
+      LOG_PATH                -> Folder name where logs should be stored
+      LOG_SCANNING_FILENAME   -> Name of file for logging scanning steps
+      LOG_SESSION_FILENAME    -> Name of file for logging statistics fom each
+                                 scanning session
+      LOG_RESULTS_FILENAME    -> Name of file for logging every single result
+      NEW_FOLDER_EACH_SESSION -> Should a new folder be created on each scanning
+                                 session?
+      
+      BOUNDS                  -> The coordinates lat, lng, lat2, lng2 for
+                                 scanning. 
+      
+      'box'
+      X_DISTANCE              -> Desirable distance in m. for a box' x axis
+      Y_DISTANCE              -> Desirable distance in m. for a box' y axis
+
+      'scheduler'
+      NEXT_SEARCH_WAIT        -> Seconds to wait before going scanning next box
+
+The 'service' entry (not shown above) is used as a template by the services and should not
+be altered.
+
+
+Logging
+========================================================================
+
+There are three files for logging different things.
+
+      SESSION:  Different statistics for the whole scanning session
+      SCANNING: This is the main debugging log file. Every scanning step is recorded
+                in this file.
+      RESULTS:  This keeps all the results extracted during the scanning session
+
+
+Troubleshooting
+========================================================================
+
+**The map in the GUI doesn't show any boxes.**
+
+*A.* Try to install the latest firefox web browser. The GUI will not work
+   for old browsers(IE8 for example).
