@@ -60,13 +60,53 @@ class GoogleRadarSearch():
          for result1 in self.root.findall('result'):
 
             det = {}
-            det['name']  = result1.findall('name')[0].text
-            print(det['name'])
+            
+
+            if len(result1.findall('name')) > 0:
+               det['name']  = result1.findall('name')[0].text
+            else:
+               det['name']  = ''
+
+
+            if len(result1.findall('formatted_address')) > 0:
+               det['address']  = result1.findall('formatted_address')[0].text
+            else:
+               det['address']  = ''
+
+
+            if len(result1.findall('international_phone_number')) > 0:
+               det['tel']  = result1.findall('international_phone_number')[0].text
+            else:
+               det['tel']  = ''
+
+
+            if len(result1.findall('website')) > 0:
+               det['website']  = result1.findall('website')[0].text
+            else:
+               det['website']  = ''
+
+
+            types = result1.findall('type')
+            det['type'] = ''
+
+            for i in range(0, len(types)):
+               if types[i].text in ("cafe", "bakery", "grocery_or_supermarket", "restaurant"):
+                  det['type'] = types[i].text
+
+
+            address_component = result1.findall('address_component')
+            det['postal_code'] = ''
+            det['postal_code_suffix'] = ''
+            for i in range(0, len(address_component)):
+               if address_component[i].findall('type')[0].text == 'postal_code':
+                  det['postal_code'] = address_component[i].findall('long_name')[0].text
+               if address_component[i].findall('type')[0].text == 'postal_code_suffix':
+                  det['postal_code_suffix'] = address_component[i].findall('long_name')[0].text
 
 
          self.resultsN+=1
          markers.append(result['location'])
-         logger.log_result(str(self.resultsN) + " : " + str(result['location']))
+         logger.log_result(str(self.resultsN) + " : " + str(det['name']) + " : " + str(det['address']) + " : " + str(result['location']) + " : " + str(det['tel']) + " : " + str(det['website']) + " : " + str(det['type']) + " : " + str(det['postal_code']) + " : " + str(det['postal_code_suffix']) )
    
       return markers
 
