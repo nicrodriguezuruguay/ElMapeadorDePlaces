@@ -18,7 +18,7 @@ config={
    # Scanning area
    #'SCANNING_AREA' : (61.5, 19, 59, 14),              # Central Sweden
    #'SCANNING_AREA' : (59.35, 18.05, 59.34, 18.07),    # Stockholm
-   'SCANNING_AREA' : (39.6501191,-121.7752981, 34.0253553,-115.2549123),               # Big area
+   'SCANNING_AREA' : (39.221622, -123.730865, 32.848527, -114.085131),               # Big area
 
    # Scanning box options
    'box':

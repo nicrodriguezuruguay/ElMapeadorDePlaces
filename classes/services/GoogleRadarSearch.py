@@ -1,6 +1,8 @@
 from lib.google_places import *
 
 import json
+#!/usr/bin/python
+import re
 from lxml import etree
 from time import sleep
 
@@ -60,39 +62,51 @@ class GoogleRadarSearch():
          for result1 in self.root.findall('result'):
 
             det = {}
-            
+
+            if len(result1.findall('id')) > 0:
+               det['id']  = result1.findall('id')[0].text
+            else:
+               det['id']  = ''
 
             if len(result1.findall('name')) > 0:
                det['name']  = result1.findall('name')[0].text
             else:
                det['name']  = ''
 
-
             if len(result1.findall('formatted_address')) > 0:
-               det['address']  = result1.findall('formatted_address')[0].text
+               det['formatted_address']  = result1.findall('formatted_address')[0].text
             else:
-               det['address']  = ''
+               det['formatted_address']  = ''
 
-
-            if len(result1.findall('international_phone_number')) > 0:
-               det['tel']  = result1.findall('international_phone_number')[0].text
+            if len(result1.findall('vicinity')) > 0:
+               det['vicinity']  = result1.findall('vicinity')[0].text
             else:
-               det['tel']  = ''
+               det['vicinity']  = ''
 
+            if len(result1.findall('postal_code')) > 0:
+               det['postal_code']  = result1.findall('postal_code')[0].text
+            else:
+               det['postal_code']  = ''
+
+            if len(result1.findall('formatted_phone_number')) > 0:
+               det['formatted_phone_number']  = result1.findall('formatted_phone_number')[0].text
+            else:
+               det['formatted_phone_number']  = ''
 
             if len(result1.findall('website')) > 0:
                det['website']  = result1.findall('website')[0].text
             else:
                det['website']  = ''
 
-
-            types = result1.findall('type')
-            det['type'] = ''
-
-            for i in range(0, len(types)):
-               if types[i].text in ("cafe", "bakery", "grocery_or_supermarket", "restaurant"):
-                  det['type'] = types[i].text
-
+            det['type']  = ''
+            first = True 
+            if len(result1.findall('type')) > 0:
+               for type in result1.findall('type'):
+                  if first:
+                     det['type']  = str(type.text)
+                     first = False
+                  else:
+                     det['type']  =  det['type'] + "," + str(type.text)
 
             address_component = result1.findall('address_component')
             det['postal_code'] = ''
@@ -106,7 +120,22 @@ class GoogleRadarSearch():
 
          self.resultsN+=1
          markers.append(result['location'])
-         logger.log_result(str(self.resultsN) + " : " + str(det['name']) + " : " + str(det['address']) + " : " + str(result['location']) + " : " + str(det['tel']) + " : " + str(det['website']) + " : " + str(det['type']) + " : " + str(det['postal_code']) + " : " + str(det['postal_code_suffix']) )
+
+         cont = 0
+         if cont == 0:
+            logger.log_result("google_id;name;address;locality;postcode;tel;latitude;longitude;website;category_labels")
+            cont = 1
+
+         # LOCATION (1) LAT (2) LONG REGULAR EXPRE
+         line = str(result['location'])
+         location_string = re.search("\('(.*?)', '(.*?)'\)", "("+line+")")
+         lat = location_string.group(1)
+         longi = location_string.group(2)
+         # LOCATION (1) LAT (2) LONG REGULAR EXPRE
+
+
+
+         logger.log_result(str(det['id']) + ";" + str(det['name']) + ";" + str(det['formatted_address']) + ";" + str(det['vicinity']) + ";" + str(det['postal_code']) + ";" + str(det['formatted_phone_number']) + ";" + lat + ";" + longi + ";" + str(det['website']) + ";" + str(det['type']))
    
       return markers
 

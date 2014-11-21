@@ -60,6 +60,7 @@ def G_make_radarsearch_req(location, radius, searchitems, key):
       pass
    url+= "&sensor=" + "false"
    url+= "&key=" + key
+   print(url)
    return url
 
 
@@ -120,4 +121,7 @@ def G_search(location, radius, searchitems, sensor, key):
 # Get details for an establishment or location of interest
 def G_details(reference, sensor, key):
    url = G_make_details_req(reference, key)
+   print("/////////////////////")
+   print(url)
+   print("/////////////////////")
    return G_sendRequest(url)
