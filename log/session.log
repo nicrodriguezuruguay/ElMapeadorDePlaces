@@ -1,22 +1,22 @@
 ============ Session information ============
 
-Started scanning  : 2014-11-21 15:10:19
+Started scanning  : 2014-11-26 12:24:15
 Finished scanning : -
-Time elapsed      : 0:00:10.146357
+Time elapsed      : 0:13:37.382768
 
 
 ----------------- Grid boxes -----------------
-Number of boxes initially: 128
-Number of boxes in the end: 128
-Quota used         : 5
+Number of boxes initially: 256
+Number of boxes in the end: 256
+Quota used         : 500
 
 
 ------------------ Requests ------------------
-Total requests sent: 1
-Min interval (secs): INF
-Max interval (secs): 0
-Avg interval (secs): 0
+Total requests sent: 100
+Min interval (secs): 0.695883
+Max interval (secs): 164.981685
+Avg interval (secs): 6.750944323232325
 
 
 ------------------ Results -------------------
-Total results generated: 0
+Total results generated: 702
